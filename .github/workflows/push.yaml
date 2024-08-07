@@ -1,12 +1,6 @@
 name: golang-pipeline
 
-on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
-  release:
-    types: [created]
+on: push
 
 jobs:
   test:
@@ -14,9 +8,6 @@ jobs:
     container: golang:1.22
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Go
-        run: go mod init
 
       - name: Run Unit Tests
         run: GOOS=linux GOARCH=amd64 go test
@@ -46,7 +37,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5.5.1
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/your-app
+          images: light87/print-12
 
       - name: Build and push Docker Image
         uses: docker/build-push-action@v5
